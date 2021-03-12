@@ -52,13 +52,10 @@ module.exports.deleteFilm = (req, res, next) => {
     .then((movie) => {
       if (!movie) throw new NotFoundError('Данные не найдены');
       if (!movie.owner.equals(req.user._id)) throw new RootError('Ошибка доступа');
-      movie.remove();
-      res.send(movie);
+      movie.remove()
+        .then(() => res.send(movie));
     })
     .catch((err) => {
-      if (err.name === 'DocumentNotFoundError') {
-        next(new NotFoundError('Данные не найдены'));
-      }
       if (err.name === 'CastError' || err.name === 'ValidationError') {
         next(new NotValidError('Переданы некорректные данные'));
       }

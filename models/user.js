@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema({
     minlength: 2,
     maxlength: 30,
     validate(name) {
-      return /^[A-Za-zА-Яа-я]{1,}$/.test(name);
+      return /^[A-Za-zА-Яа-я\s]{1,}$/.test(name);
     },
   },
 });

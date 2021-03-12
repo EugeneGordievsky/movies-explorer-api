@@ -5,22 +5,52 @@ const { getSavedFilms, createFilm, deleteFilm } = require('../controllers/movies
 router.get('/', getSavedFilms);
 router.post('/', celebrate({
   body: Joi.object().keys({
-    country: Joi.string().required(),
-    director: Joi.string().required(),
-    duration: Joi.number().required(),
-    year: Joi.string().required(),
-    description: Joi.string().required(),
-    image: Joi.string().required().pattern(/^https?:\/\/(w{3}\.)?[\w\-.~:/?#[\]@!$&'\\()*+,;=]/),
-    trailer: Joi.string().required().pattern(/^https?:\/\/(w{3}\.)?[\w\-.~:/?#[\]@!$&'\\()*+,;=]/),
-    thumbnail: Joi.string().required().pattern(/^https?:\/\/(w{3}\.)?[\w\-.~:/?#[\]@!$&'\\()*+,;=]/),
-    nameRU: Joi.string().required().pattern(/^[А-Яа-я\s]{1,}$/),
-    nameEN: Joi.string().required().pattern(/^[A-Za-z\s]{1,}$/),
-    movieId: Joi.string().required(),
+    country: Joi.string().required().messages({
+      'any.required': 'Обязательное поле',
+    }),
+    director: Joi.string().required().messages({
+      'any.required': 'Обязательное поле',
+    }),
+    duration: Joi.number().required().messages({
+      'any.required': 'Обязательное поле',
+    }),
+    year: Joi.string().required().messages({
+      'any.required': 'Обязательное поле',
+    }),
+    description: Joi.string().required().messages({
+      'any.required': 'Обязательное поле',
+    }),
+    image: Joi.string().required().pattern(/^https?:\/\/(w{3}\.)?[\w\-.~:/?#[\]@!$&'\\()*+,;=]/).messages({
+      'any.required': 'Обязательное поле',
+      'string.pattern.base': 'Требуется ввести URL',
+    }),
+    trailer: Joi.string().required().pattern(/^https?:\/\/(w{3}\.)?[\w\-.~:/?#[\]@!$&'\\()*+,;=]/).messages({
+      'any.required': 'Обязательное поле',
+      'string.pattern.base': 'Требуется ввести URL',
+    }),
+    thumbnail: Joi.string().required().pattern(/^https?:\/\/(w{3}\.)?[\w\-.~:/?#[\]@!$&'\\()*+,;=]/).messages({
+      'any.required': 'Обязательное поле',
+      'string.pattern.base': 'Требуется ввести URL',
+    }),
+    nameRU: Joi.string().required().pattern(/^[А-Яа-я\s\W]{1,}$/).messages({
+      'any.required': 'Обязательное поле',
+      'string.pattern.base': 'Требуется ввести символы русского алфавита',
+    }),
+    nameEN: Joi.string().required().pattern(/^[A-Za-z\s\W]{1,}$/).messages({
+      'any.required': 'Обязательное поле',
+      'string.pattern.base': 'Требуется ввести символы английского алфавита',
+    }),
+    movieId: Joi.string().required().messages({
+      'any.required': 'Обязательное поле',
+    }),
   }),
 }), createFilm);
 router.delete('/:movieId', celebrate({
   params: Joi.object().keys({
-    movieId: Joi.string().alphanum().length(24),
+    movieId: Joi.string().hex().length(24).messages({
+      'string.hex': 'Требуется ввести HEX строку',
+      'string.length': 'Требуется ввести 24 символа',
+    }),
   }),
 }), deleteFilm);
 
