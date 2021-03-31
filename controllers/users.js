@@ -33,6 +33,9 @@ module.exports.updateProfile = (req, res, next) => {
       if (err.name === 'CastError' || err.name === 'ValidationError') {
         next(new NotValidError('Переданы некорректные данные'));
       }
+      if (err.name === 'MongoError') {
+        next(new UniqueError('Этот Email уже зарегистрирован'));
+      }
       next(err);
     });
 };
