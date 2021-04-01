@@ -48,7 +48,7 @@ module.exports.createFilm = (req, res, next) => {
 };
 
 module.exports.deleteFilm = (req, res, next) => {
-  Movie.findById(req.params.movieId)
+  Movie.find({ movieId: req.params.movieId })
     .then((movie) => {
       if (!movie) throw new NotFoundError('Данные не найдены');
       if (!movie.owner.equals(req.user._id)) throw new RootError('Ошибка доступа');
