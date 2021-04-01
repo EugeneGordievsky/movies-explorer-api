@@ -32,11 +32,11 @@ router.post('/', celebrate({
       'any.required': 'Обязательное поле',
       'string.pattern.base': 'Требуется ввести URL',
     }),
-    nameRU: Joi.string().required().pattern(/^[А-Яа-я\s\w]{1,}$/).messages({
+    nameRU: Joi.string().required().pattern(/^[А-Яа-я\s\w\S]{1,}$/).messages({
       'any.required': 'Обязательное поле',
       'string.pattern.base': 'Требуется ввести символы русского алфавита',
     }),
-    nameEN: Joi.string().required().pattern(/^[\s\w]{1,}$/).messages({
+    nameEN: Joi.string().required().pattern(/^[\s\w\S]{1,}$/).messages({
       'any.required': 'Обязательное поле',
       'string.pattern.base': 'Требуется ввести символы английского алфавита',
     }),
