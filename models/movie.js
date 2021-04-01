@@ -56,14 +56,14 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: true,
     validate(name) {
-      return /^[А-Яа-яA-Za-z\s\W]{1,}$/.test(name);
+      return /^[А-Яа-я\s\w]{1,}$/.test(name);
     },
   },
   nameEN: {
     type: String,
     required: true,
     validate(name) {
-      return /^[A-Za-z\s\W]{1,}$/.test(name);
+      return /^[\s\w]{1,}$/.test(name);
     },
   },
 });
