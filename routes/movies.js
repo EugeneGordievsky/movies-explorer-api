@@ -40,7 +40,7 @@ router.post('/', celebrate({
       'any.required': 'Обязательное поле',
       'string.pattern.base': 'Требуется ввести символы английского алфавита',
     }),
-    movieId: Joi.string().required().messages({
+    movieId: Joi.number().required().messages({
       'any.required': 'Обязательное поле',
     }),
   }),
