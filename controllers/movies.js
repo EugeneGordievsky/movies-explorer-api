@@ -51,8 +51,8 @@ module.exports.deleteFilm = (req, res, next) => {
   Movie.find({ movieId: req.params.movieId, owner: req.user._id })
     .then((movie) => {
       if (!movie) throw new NotFoundError('Данные не найдены');
-      if (!movie.owner.equals(req.user._id)) throw new RootError('Ошибка доступа');
-      movie.remove()
+      if (!movie[0].owner.equals(req.user._id)) throw new RootError('Ошибка доступа');
+      movie[0].remove()
         .then(() => res.send(movie));
     })
     .catch((err) => {
