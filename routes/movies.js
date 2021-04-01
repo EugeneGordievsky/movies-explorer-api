@@ -47,9 +47,8 @@ router.post('/', celebrate({
 }), createFilm);
 router.delete('/:movieId', celebrate({
   params: Joi.object().keys({
-    movieId: Joi.string().hex().length(24).messages({
-      'string.hex': 'Требуется ввести HEX строку',
-      'string.length': 'Требуется ввести 24 символа',
+    movieId: Joi.number().messages({
+      'string.nubmer': 'Требуется ввести число',
     }),
   }),
 }), deleteFilm);
