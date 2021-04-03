@@ -48,11 +48,11 @@ module.exports.createFilm = (req, res, next) => {
 };
 
 module.exports.deleteFilm = (req, res, next) => {
-  Movie.find({ movieId: req.params.movieId, owner: req.user._id })
+  Movie.findById(req.params.movieId)
     .then((movie) => {
       if (!movie) throw new NotFoundError('Данные не найдены');
-      if (!movie[0].owner.equals(req.user._id)) throw new RootError('Ошибка доступа');
-      movie[0].remove()
+      if (!movie.owner.equals(req.user._id)) throw new RootError('Ошибка доступа');
+      movie.remove()
         .then(() => res.send(movie));
     })
     .catch((err) => {
